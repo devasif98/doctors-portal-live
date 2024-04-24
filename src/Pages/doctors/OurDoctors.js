@@ -55,8 +55,6 @@ const OurDoctors = () => {
             "phone": "01966666666"
         }
     ];
-
-
     return (
         <div className='my-24'>
             <div>

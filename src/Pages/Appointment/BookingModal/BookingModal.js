@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import React, { useContext } from "react";
 import Swal from 'sweetalert2';
 import { AuthContext } from "../../../Context/AuthProvider";
+import './booking.css'
 
 const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
   const date = format(selectedDate, "PP");
@@ -15,46 +16,61 @@ const BookingModal = ({ treatment, selectedDate, setTreatment, refetch }) => {
     const names = form.names.value;
     const email = form.email.value;
     const phone = form.phone.value;
-
-    const booking = {
-        appointmentDate: date,
-        treatment: name,
-        patient: names,
-        slot,
-        email,
-        phone,
-    }
-    console.log(booking);
-    console.log(date, slot, names, email, phone);
-    fetch('https://doctors-portal-server23.vercel.app/bookings',{
-      method: 'POST',
-      headers:{
-        'content-type':'application/json'
-      },
-      body: JSON.stringify(booking)
-    })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      
-      if(data.acknowledged){
-        setTreatment(null);
+  
+    if (!user) {
       Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Successfully Booking',
+        icon: 'info',
+        title: 'You must log in first',
         showConfirmButton: false,
-        timer: 1500
-      })
-      refetch();
-      }
-      else{
-        alert('already booked')
-      }
-      
+        timer: 2000,
+        footer: '<a id="loginButton" href="/login">Login</a>'
+      });
+      return;
+    }
+    
+  
+    const booking = {
+      appointmentDate: date,
+      treatment: name,
+      patient: names,
+      slot,
+      email,
+      phone,
+    };
+  
+    fetch("https://doctors-portal-server23.vercel.app/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
     })
-    setTreatment(null)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+  
+        if (data.acknowledged) {
+          setTreatment(null);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Successfully Booking",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          refetch();
+        } else {
+          alert("already booked");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle error, perhaps show an alert
+      });
+  
+    setTreatment(null);
   };
+  
   return (
     <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />

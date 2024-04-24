@@ -15,7 +15,7 @@ const Banner = () => {
           <div>
             <h1 className='text-5xl font-bold text-[#3A4256]'>Your New Smile Starts Here</h1>
             <p className="py-6 text-[#3A4256] text-base">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the
+            Oral health is a key indicator of overall health, well-being and quality of life. It encompasses a range of diseases and conditions that include dental caries, Periodontal disease, Tooth loss, Oral cancer, Oral manifestations of HIV infection, Oro-dental trauma, Noma and birth defects such as cleft lip and palate.
             </p>
             <button className="btn bg-gradient border-none text-white">Get Started</button>
           </div>
