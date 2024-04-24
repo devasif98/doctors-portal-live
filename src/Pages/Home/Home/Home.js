@@ -7,7 +7,7 @@ import Description from '../Description/Description';
 import MakeAppointment from '../MakeAppointment/MakeAppointment';
 import Services from '../Service/Services';
 import Testimonial from '../Testimonial/Testimonial';
-import OurDoctors from '../../doctors/OurDoctors';
+import OurDoctors from '../doctors/OurDoctors';
 import { Helmet } from 'react-helmet';
 
 const Home = () => {

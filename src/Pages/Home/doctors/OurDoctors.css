@@ -1,13 +1,6 @@
 .doctor-slide {
     text-align: center;
 }
-
-.doctor-image {
-    width: auto; /* Adjust size as needed */
-    height: 400px; /* Adjust size as needed */
-    margin: 0 auto;
-}
-
 .doctor-name,
 .doctor-phone {
     margin-top: 10px;

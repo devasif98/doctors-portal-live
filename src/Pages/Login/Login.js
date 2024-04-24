@@ -26,6 +26,7 @@ const Login = () => {
     .then((result)=>{
       const user = result.user;
       console.log(user);
+      saveUser(user.displayName, user.email, user.photoURL);
       navigate(from, {replace: true})
     })
     .catch((error)=>{
@@ -70,6 +71,35 @@ const Login = () => {
                 timer: 1500
               })
         })
+  };
+
+  const saveUser = (email, password, photo) => {
+    // Check if the user already exists in the database
+    fetch(`https://doctors-portal-server23.vercel.app/users`)
+      .then(res => res.json())
+      .then(users => {
+        // Check if any user has the same email
+        const existingUser = users.find(user => user.email === email);
+        if (existingUser) {
+          return; // Do not save if user already exists
+        }
+  
+        // User does not exist, save the user data
+        const user = { email, password, photo };
+        fetch('https://doctors-portal-server23.vercel.app/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+          navigate(from, { replace: true });
+        })
+        .catch(error => console.error('Error saving user:', error));
+      })
+      .catch(error => console.error('Error checking existing user:', error));
   };
   return (
     <div>

@@ -5,14 +5,14 @@ import SwiperCore, { Autoplay, FreeMode } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-import './OurDoctors.css'
+import './OurDoctors.css';
 
-import doc3 from "../../assets/images/doc1.png";
-import doc1 from "../../assets/images/doc2.png";
-import doc2 from "../../assets/images/doc3.png";
-import doc4 from "../../assets/images/doc4.png";
-import doc5 from "../../assets/images/doc5.png";
-import doc6 from "../../assets/images/doc6.png";
+import doc1 from "../../../assets/images/doc1.png";
+import doc2 from "../../../assets/images/doc2.png";
+import doc3 from "../../../assets/images/doc3.png";
+import doc4 from "../../../assets/images/doc4.png";
+import doc5 from "../../../assets/images/doc5.png";
+import doc6 from "../../../assets/images/doc6.png";
 
 SwiperCore.use([FreeMode, Autoplay]);
 
@@ -55,6 +55,30 @@ const OurDoctors = () => {
             "phone": "01966666666"
         }
     ];
+
+    const breakpoints = {
+        320: {
+            slidesPerView: 1,
+            spaceBetween: 20,
+        },
+        480: {
+            slidesPerView: 1,
+            spaceBetween: 30,
+        },
+        768: {
+            slidesPerView: 2,
+            spaceBetween: 40,
+        },
+        1024: {
+            slidesPerView: 3,
+            spaceBetween: 50,
+        },
+        1280: {
+            slidesPerView: 3,
+            spaceBetween: 60,
+        },
+    };
+
     return (
         <div className='my-24'>
             <div>
@@ -63,8 +87,7 @@ const OurDoctors = () => {
             </div>
             <div className='my-5'>
                 <Swiper
-                    slidesPerView={3}
-                    spaceBetween={30}
+                    breakpoints={breakpoints}
                     freeMode={true}
                     autoplay={{
                         delay: 2500,
@@ -75,7 +98,7 @@ const OurDoctors = () => {
                     {doctors.map(doctor => (
                         <SwiperSlide key={doctor._id}>
                             <div className="doctor-slide">
-                                <img src={doctor.img} alt={doctor.name} className="doctor-image" />
+                                <img src={doctor.img} alt={doctor.name} className="doctor-image w-auto h-[300px] md:h-[250px] xl:h-[400px] mx-auto" />
                                 <p className="doctor-name">{doctor.name}</p>
                                 <p className="doctor-phone">{doctor.phone}</p>
                             </div>

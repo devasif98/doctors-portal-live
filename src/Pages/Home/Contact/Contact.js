@@ -24,7 +24,7 @@ const Contact = () => {
                 </p>
               </div>
 
-              <form action="" className="mx-auto mt-8 mb-0 max-w-md space-y-4">
+              <form action="" className="mx-auto mt-8 mb-0 max-w-md space-y-4 border border-primary rounded-xl lg:w-[450px] p-6">
                 <div>
                   <label className="sr-only">Email</label>
 

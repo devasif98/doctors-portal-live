@@ -29,6 +29,7 @@ const Signup = () => {
     .then((result)=>{
       const user = result.user;
       console.log(user);
+      saveUser(user.displayName, user.email, user.photoURL);
       navigate(from, {replace: true})
     })
     .catch((error)=>{
@@ -63,22 +64,38 @@ const Signup = () => {
     
     })
   };
+
+  const saveUser = (email, password, photo) => {
+    // Check if the user already exists in the database
+    fetch(`https://doctors-portal-server23.vercel.app/users`)
+      .then(res => res.json())
+      .then(users => {
+        // Check if any user has the same email
+        const existingUser = users.find(user => user.email === email);
+        if (existingUser) {
+          return; // Do not save if user already exists
+        }
   
-  const saveUser = (name, email, photo)=>{
-    const user ={name, email, photo};
-    fetch('https://doctors-portal-server23.vercel.app/users',{
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(user)
-    })
-    .then(res=> res.json())
-    .then(data =>{
-      setCreatedUserEmail(email);
-      navigate(from, {replace: true})
-    })
-  }
+        // User does not exist, save the user data
+        const user = { email, password, photo };
+        fetch('https://doctors-portal-server23.vercel.app/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+          setCreatedUserEmail(email);
+          navigate(from, { replace: true });
+        })
+        .catch(error => console.error('Error saving user:', error));
+      })
+      .catch(error => console.error('Error checking existing user:', error));
+  };
+  
+  
   return (
     <div>
       <div className="flex justify-center lg:m-28">
@@ -112,7 +129,7 @@ const Signup = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="name" className="block text-sm">
-                    Name
+                    Photo
                   </label>
                   <input
                     {...register("photo", { required: "Photo is required*" })}
