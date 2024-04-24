@@ -8,6 +8,8 @@ import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
 import PrivarteRoutes from "./PrivarteRoutes";
+import About from "../Pages/About/About";
+import ContactUs from "../Pages/Contact/Contactus";
 
 export const router = createBrowserRouter([
     {
@@ -29,6 +31,14 @@ export const router = createBrowserRouter([
             {
                 path:'/appointment',
                 element: <Appointment></Appointment>
+            },
+            {
+                path:'/about',
+                element: <About/>
+            },
+            {
+                path:'/contact',
+                element: <ContactUs/>
             },
         ]
     },

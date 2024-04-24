@@ -18,11 +18,6 @@ const AppointmentBook = ({selectedDate}) => {
         return data
       }
     })
-    // const {data:appointmentOptions = []} = useQuery({
-    //   queryKey: ['appointmentOptions'],
-    //   queryFn: () => fetch('https://doctors-portal-server23.vercel.app/appointmentOptions')
-    //   .then(res=> res.json())
-    // })\
     if(isLoading){
       return <Loading></Loading>
     }

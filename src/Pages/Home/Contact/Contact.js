@@ -38,22 +38,22 @@ const Contact = () => {
                 </div>
 
                 <div>
-                  <label className="sr-only">Password</label>
+                  <label className="sr-only">Title</label>
                   <div className="relative">
                     <input
-                      type="password"
+                      type="text"
                       className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                      placeholder="Enter password"
+                      placeholder="Give a short title"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="sr-only">Password</label>
+                  <label className="sr-only">Message</label>
                   <div className="relative">
                     <textarea
-                      type="password"
+                      type="textarea"
                       className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                      placeholder="Enter password"
+                      placeholder="Give Your Feedback here....."
                     />
                   </div>
                 </div>

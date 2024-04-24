@@ -1,5 +1,5 @@
 import React from "react";
-import doctorImg from "../../../assets/images/doctor-small.png";
+import doctorImg from "../../../assets/images/ydoctor.png";
 import appointment from "../../../assets/images/appointment.png";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../../../components/PrimaryButton/PrimaryButton";
@@ -13,16 +13,21 @@ const MakeAppointment = () => {
       }}
     >
       <div className="hero">
-        <div className="hero-content flex-col lg:flex-row lg:px-32">
-          <img
-            src={doctorImg}
-            className="-mt-32 -mb-4 lg:w-1/2 rounded-lg hidden lg:block"
-            alt=""
-          />
+        <div className="hero-content flex-col lg:flex-row md:px-5 xl:px-32 relative">
+          <div className="absolute -left-2 xl:left-3 bottom-0">
+            <img
+              src={doctorImg}
+              className="rounded-lg hidden lg:block w-auto"
+              alt=""
+            />
+          </div>
+          <div className="lg:w-1/2">
+
+          </div>
 
           <div className="lg:w-1/2">
             <h1 className="text-lg font-bold text-primary">Appointment</h1>
-            <h1 className="text-4xl font-semibold text-white lg:text-justify ">
+            <h1 className="text-4xl font-semibold text-white xl:text-justify ">
               Make an appointment Today
             </h1>
             <p className="pt-5 pb-3 text-base text-white">

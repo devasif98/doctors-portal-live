@@ -2,12 +2,9 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/icons/logo.png";
 import { AuthContext } from "../../Context/AuthProvider";
-import { useState } from "react";
-import DarkModeToggle from "react-dark-mode-toggle";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const [isDarkMode, setIsDarkMode] = useState(() => false);
 
   const handleLogout = () => {
     logOut()
@@ -16,7 +13,6 @@ const Navbar = () => {
   };
   const menuItems = (
     <>
-      <DarkModeToggle onChange={setIsDarkMode} checked={isDarkMode} size={80} />
       <li className="relative font-medium text-indigo-600 before:absolute before:-bottom-1 before:h-0.5 before:w-full before:origin-left before:scale-x-0 before:bg-indigo-600 before:transition hover:before:scale-100">
         <Link to={"/"}>Home</Link>
       </li>
