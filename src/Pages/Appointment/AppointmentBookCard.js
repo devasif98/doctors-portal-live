@@ -4,7 +4,7 @@ const AppointmentBookCard = ({ bookCard, setTreatment }) => {
   const { name, slots } = bookCard;
   return (
     <div className="flex justify-center">
-      <article className="overflow-hidden rounded-lg transition hover:shadow-lg text-center px-10">
+      <article className="overflow-hidden rounded-lg transition shadow hover:shadow-xl text-center px-10 cursor-grab">
         <div className="bg-white p-4 sm:p-6">
           <time className="block text-xl text-secondary font-semibold">
             {name}

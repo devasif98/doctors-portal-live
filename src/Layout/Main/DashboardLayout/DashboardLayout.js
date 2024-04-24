@@ -30,14 +30,6 @@ const DashboardLayout = () => {
               <div>
                 <h2 className="text-lg font-semibold">{user.displayName}</h2>
                 <h2 className="text-sm">{user.email}</h2>
-                <span className="flex items-center space-x-1">
-                  <label
-                    htmlFor="my-modal-4"
-                    className="text-xs hover:underline dark:text-gray-400"
-                  >
-                    View Profile
-                  </label>
-                </span>
               </div>
             </div>
             <ul className="pt-2 pb-4 space-y-1 text-sm">
@@ -145,60 +137,6 @@ const DashboardLayout = () => {
           </div>
         </div>
       </div>
-      <input type="checkbox" id="my-modal-4" className="modal-toggle " />
-      <label htmlFor="my-modal-4" className="modal cursor-pointer">
-        <label className="modal-box relative" htmlFor="">
-          <a
-            href="/"
-            className="relative block overflow-hidden rounded-lg border border-gray-100 p-8"
-          >
-            <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
-
-            <div className="justify-between sm:flex">
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">
-                  {user.displayName}
-                </h3>
-
-                <p className="mt-1 text-xs font-medium text-gray-600">
-                  {user.email}
-                </p>
-              </div>
-
-              <div className="ml-3 hidden flex-shrink-0 sm:block">
-                <img
-                  alt="Paul Clapton"
-                  src={user.photoURL}
-                  className="h-16 w-16 rounded-lg object-cover shadow-sm"
-                />
-              </div>
-            </div>
-
-            <div className="mt-4 sm:pr-8">
-              <p className="text-sm text-gray-500">
-                Hi! I am {user.displayName}, a web designer/developer focused on
-                crafting great web experiences. Designing and Coding have been
-                my passion since the days I started working with computers but I
-                found myself into web design/development since 2016. I enjoy
-                creating beautifully designed, intuitive and functional
-                websites.
-              </p>
-            </div>
-
-            <dl className="mt-6 flex">
-              <div className="flex flex-col-reverse">
-                <dt className="text-sm font-medium text-gray-600">Birth Date</dt>
-                <dd className="text-xs text-gray-500">22nd Nov, 1998</dd>
-              </div>
-
-              {/* <div className="ml-3 flex flex-col-reverse sm:ml-6">
-                <dt className="text-sm font-medium text-gray-600">Reading time</dt>
-                <dd className="text-xs text-gray-500">3 minute</dd>
-              </div> */}
-            </dl>
-          </a>
-        </label>
-      </label>
     </div>
   );
 };
