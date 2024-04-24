@@ -32,18 +32,18 @@ const Contact = () => {
                     <input
                       type="email"
                       className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                      placeholder="Enter email"
+                      placeholder="Email Address"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="sr-only">Title</label>
+                  <label className="sr-only">Subject</label>
                   <div className="relative">
                     <input
                       type="text"
                       className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                      placeholder="Give a short title"
+                      placeholder="Subject"
                     />
                   </div>
                 </div>
@@ -53,7 +53,7 @@ const Contact = () => {
                     <textarea
                       type="textarea"
                       className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm"
-                      placeholder="Give Your Feedback here....."
+                      placeholder="Your Message....."
                     />
                   </div>
                 </div>
