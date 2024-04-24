@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../Layout/Main/DashboardLayout/DashboardLayout";
 import Main from "../Layout/Main/Main";
 import Appointment from "../Pages/Appointment/Appointment";
-import Dashboard from "../Pages/Dashboard/Dashboard";
 import MyAppointment from "../Pages/Dashboard/MyAppointment/MyAppointment";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -10,6 +9,10 @@ import Signup from "../Pages/Signup/Signup";
 import PrivarteRoutes from "./PrivarteRoutes";
 import About from "../Pages/About/About";
 import ContactUs from "../Pages/Contact/Contactus";
+import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import AddDoctors from "../Pages/Dashboard/AddDoctors/AddDoctors";
+import AllDoctors from "../Pages/Dashboard/AllDoctors/AllDoctors";
 
 export const router = createBrowserRouter([
     {
@@ -48,7 +51,23 @@ export const router = createBrowserRouter([
         children:[
             {
                 path:'/dashboard',
+                element: <Dashboard/>
+            },
+            {
+                path:'/dashboard/appointment',
                 element: <MyAppointment></MyAppointment>
+            },
+            {
+                path:'/dashboard/allUsers',
+                element: <AllUsers/>
+            },
+            {
+                path:'/dashboard/addDoctors',
+                element: <AddDoctors/>
+            },
+            {
+                path:'/dashboard/allDoctors',
+                element: <AllDoctors/>
             }
         ]
     }

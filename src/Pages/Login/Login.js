@@ -73,7 +73,7 @@ const Login = () => {
         })
   };
 
-  const saveUser = (email, password, photo) => {
+  const saveUser = (name, email, photo) => {
     // Check if the user already exists in the database
     fetch(`https://doctors-portal-server23.vercel.app/users`)
       .then(res => res.json())
@@ -85,7 +85,7 @@ const Login = () => {
         }
   
         // User does not exist, save the user data
-        const user = { email, password, photo };
+        const user = { name, email, photo };
         fetch('https://doctors-portal-server23.vercel.app/users', {
           method: 'POST',
           headers: {
