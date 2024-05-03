@@ -50,7 +50,6 @@ const Signup = () => {
         displayName: data.name,
         photoURL: data.photo
       }
-
       updateUser(userInfo)
       .then(()=>{
         saveUser(data.name, data.email, data.photo);
@@ -70,14 +69,11 @@ const Signup = () => {
     fetch(`https://doctors-portal-server23.vercel.app/users`)
       .then(res => res.json())
       .then(users => {
-        // Check if any user has the same email
         const existingUser = users.find(user => user.email === email);
         if (existingUser) {
-          return; // Do not save if user already exists
+          return;
         }
-  
-        // User does not exist, save the user data
-        const user = { name, email, photo };
+        const user = { name, email, photo, userType: "user" };
         fetch('https://doctors-portal-server23.vercel.app/users', {
           method: 'POST',
           headers: {
