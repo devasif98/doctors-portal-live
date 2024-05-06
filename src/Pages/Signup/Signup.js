@@ -128,7 +128,7 @@ const Signup = () => {
                     Photo
                   </label>
                   <input
-                    {...register("photo", { required: "Photo is required*" })}
+                    {...register("photo")}
                     type="photo"
                     name="photo"
                     id="photo"
