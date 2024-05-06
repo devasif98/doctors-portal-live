@@ -78,7 +78,7 @@ const AllDoctors = () => {
                                 <td>
                                     {user.name} <br />
                                     {user.phoneNumber} <br />
-                                    {user.educationPractice.split(', ').slice(0, 5).join(', ')}
+                                    {user.educationPractice?.split(', ').slice(0, 5).join(', ')}
                                 </td>
 
                                 <td>{user.specialization}</td>
