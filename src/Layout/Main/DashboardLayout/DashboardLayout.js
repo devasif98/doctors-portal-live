@@ -2,12 +2,16 @@ import React, { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import Navbar from "../../../Shared/Navbar/Navbar";
+import { Helmet } from "react-helmet";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
   return (
     <div>
       <Navbar></Navbar>
+      <Helmet>
+                <title>Dashboard | Doctors Portal</title>
+            </Helmet>
 
       <div className="drawer drawer-mobile">
         <input

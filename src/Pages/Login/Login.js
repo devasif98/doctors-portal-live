@@ -83,21 +83,7 @@ const Login = () => {
         if (existingUser) {
           return; // Do not save if user already exists
         }
-  
-        // User does not exist, save the user data
-        const user = { name, email, photo };
-        fetch('https://doctors-portal-server23.vercel.app/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(user)
-        })
-        .then(res => res.json())
-        .then(data => {
-          navigate(from, { replace: true });
-        })
-        .catch(error => console.error('Error saving user:', error));
+        navigate(from, { replace: true });
       })
       .catch(error => console.error('Error checking existing user:', error));
   };
