@@ -38,7 +38,7 @@ const AllUsers = () => {
 
   const handleUserTypeClick = async (userId, userType) => {
     try {
-      const res = await fetch(`http://localhost:5000/users/${userId}`, {
+      const res = await fetch(`https://doctors-portal-server23.vercel.app/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const AllUsers = () => {
 
   const handleDeleteClick = async (userId) => {
     try {
-      const res = await fetch(`http://localhost:5000/users/${userId}`, {
+      const res = await fetch(`https://doctors-portal-server23.vercel.app/users/${userId}`, {
         method: 'DELETE',
       });
 
