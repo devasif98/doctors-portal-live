@@ -1,12 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../Context/AuthProvider';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import ResponsivePagination from 'react-responsive-pagination';
+import { MdDeleteOutline } from "react-icons/md";
+import { RiAdminFill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 import 'react-responsive-pagination/themes/classic.css';
+import { toast } from 'react-hot-toast';
 import './style.css';
 
 const AllUsers = () => {
   const { user } = useContext(AuthContext);
+  const queryClient = useQueryClient();
 
   const url = `https://doctors-portal-server23.vercel.app/users`;
 
@@ -31,10 +36,47 @@ const AllUsers = () => {
   const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 
+  const handleUserTypeClick = async (userId, userType) => {
+    try {
+      const res = await fetch(`http://localhost:5000/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userType }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to update user type');
+      }
+
+      queryClient.invalidateQueries(['users', user?.email]);
+      toast.success('User userType updated successfully');
+    } catch (error) {
+      toast.error('Failed to update user userType');
+    }
+  };
+
+  const handleDeleteClick = async (userId) => {
+    try {
+      const res = await fetch(`http://localhost:5000/users/${userId}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to delete user');
+      }
+
+      queryClient.invalidateQueries(['users', user?.email]);
+      toast.success('User deleted successfully');
+    } catch (error) {
+      toast.error('Failed to delete user');
+    }
+  };
+
   return (
     <div>
       <h1 className='text-3xl my-5'>All Users</h1>
-
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
@@ -53,26 +95,41 @@ const AllUsers = () => {
                 <td>{user.name}</td>
                 <td>{user.email}</td>
                 <td>
-                  <div className='px-3 py-1 bg-slate-700 text-white rounded-lg text-center uppercase cursor-pointer'>
-                    {user.userType}
+                  <div
+                    className={` ${user.userType === 'admin' ? 'disabled' : ''}`}
+
+                  >
+
+                    {user.userType === "admin" ?
+                      <RiAdminFill className='text-center uppercase cursor-pointer  text-2xl text-blue-500' onClick={() =>
+                        handleUserTypeClick(user._id, 'admin')
+                      } />
+                      :
+                      <>
+                        <FaUser className='text-center uppercase cursor-pointer  text-2xl text-green-500' onClick={() =>
+                          handleUserTypeClick(user._id, 'admin')
+                        } />
+                      </>
+                    }
                   </div>
                 </td>
                 <td>
-                  <div className='px-3 py-1 bg-red-700 text-white rounded-lg text-center cursor-pointer'>
-                    Delete
+                  <div className='text-red-700 flex justify-center'>
+                    <MdDeleteOutline className='cursor-pointer text-3xl' onClick={() => handleDeleteClick(user._id)} />
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <ResponsivePagination
-          current={currentPage}
-          total={Math.ceil(users.length / usersPerPage)}
-          onPageChange={setCurrentPage}
-          pageClassName="bg-gray-300"
-        />
-
+        <div className='mt-5'>
+          <ResponsivePagination
+            current={currentPage}
+            total={Math.ceil(users.length / usersPerPage)}
+            onPageChange={setCurrentPage}
+            pageClassName="bg-gray-300"
+          />
+        </div>
       </div>
     </div>
   );
