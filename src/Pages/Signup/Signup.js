@@ -10,62 +10,76 @@ const Signup = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { createUser, updateUser,googleSignIn } = useContext(AuthContext);
-  const [signUpError, setSignUpError] = useState('')
-  const [createdUserEmail, setCreatedUserEmail] = useState('')
+  const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
+  const [signUpError, setSignUpError] = useState('');
+  const [createdUserEmail, setCreatedUserEmail] = useState('');
   const [token] = useToken(createdUserEmail);
   const location = useLocation();
   const navigate = useNavigate();
 
-  if(token){
-    navigate('/')
+  if (token) {
+    navigate('/');
   }
 
+  const from = location.state?.from?.pathname || '/';
 
-  const from = location.state?.from?.pathname || '/'
-
-  const handleGoogleSignIn =()=>{
+  const handleGoogleSignIn = () => {
     googleSignIn()
-    .then((result)=>{
-      const user = result.user;
-      console.log(user);
-      saveUser(user.displayName, user.email, user.photoURL);
-      navigate(from, {replace: true})
-    })
-    .catch((error)=>{
-      console.error("error: ", error)
-  })
-  }
-
-  const handleSignup = (data) => {
-    console.log(data);
-    setSignUpError('')
-
-    createUser( data.email, data.password)
-    .then(result =>{
-      const user = result.user;
-      console.log(user);
-      navigate(from, {replace: true})
-      const userInfo ={
-        displayName: data.name,
-        photoURL: data.photo
-      }
-      updateUser(userInfo)
-      .then(()=>{
-        saveUser(data.name, data.email, data.photo);
-
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        saveUser(user.displayName, user.email, user.photoURL);
+        navigate(from, { replace: true });
       })
-      .catch(error => console.log(error))
-    })
-    .catch(error => {
-      console.log(error)
-      setSignUpError(error.message)
-    
-    })
+      .catch((error) => {
+        console.error("error: ", error);
+      });
   };
 
+  const handleSignup = async (data) => {
+    // Handle form submission
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('imageFile', data.photo[0]); // Assuming the file input is named 'photo'
+    
+    setSignUpError('');
+    const uploadPhotoUrl = "https://doctors-portal-server23.vercel.app/uploadUsersPhoto";
+    try {
+      const uploadResponse = await fetch(uploadPhotoUrl, {
+        method: "POST",
+        body: formData,
+      });
+      if (!uploadResponse.ok) {
+        throw new Error(`Failed to upload photo: ${uploadResponse.statusText}`);
+      }
+      const imageData = await uploadResponse.json();
+      const imageUrl = imageData.url;
+      const imageElement = document.getElementById('uploadedImage');
+      if (imageElement) {
+        imageElement.src = imageUrl;
+      }
+      
+      const result = await createUser(data.email, data.password);
+      const user = result.user;
+      console.log(user);
+      navigate(from, { replace: true });
+      const userInfo = {
+        displayName: data.name,
+        photoURL: imageUrl // No need for imageUrl.url here
+      };
+      await updateUser(userInfo);
+      saveUser(data.name, data.email, imageUrl); // Pass imageUrl instead of imageUrl.url
+    } catch (error) {
+      console.log(error);
+      setSignUpError(error.message);
+    }
+  };
+  
+  
+
   const saveUser = (name, email, photo) => {
-    // Check if the user already exists in the database
     fetch(`https://doctors-portal-server23.vercel.app/users`)
       .then(res => res.json())
       .then(users => {
@@ -81,17 +95,16 @@ const Signup = () => {
           },
           body: JSON.stringify(user)
         })
-        .then(res => res.json())
-        .then(data => {
-          setCreatedUserEmail(email);
-          navigate(from, { replace: true });
-        })
-        .catch(error => console.error('Error saving user:', error));
+          .then(res => res.json())
+          .then(data => {
+            setCreatedUserEmail(email);
+            navigate(from, { replace: true });
+          })
+          .catch(error => console.error('Error saving user:', error));
       })
       .catch(error => console.error('Error checking existing user:', error));
   };
-  
-  
+
   return (
     <div>
       <div className="flex justify-center lg:m-28">
@@ -102,9 +115,9 @@ const Signup = () => {
           <div>
             <form onSubmit={handleSubmit(handleSignup)}>
               <div className=" lg:w-96">
-                {signUpError &&
+                {signUpError && (
                   <p className="text-red-600">SignUp error</p>
-                }
+                )}
                 <div className="space-y-2">
                   <label htmlFor="name" className="block text-sm">
                     Name
@@ -119,7 +132,7 @@ const Signup = () => {
                   />
                   {errors.name && (
                     <p className="text-red-600" role="alert">
-                      {errors.name?.message}
+                      {errors.name.message}
                     </p>
                   )}
                 </div>
@@ -129,7 +142,7 @@ const Signup = () => {
                   </label>
                   <input
                     {...register("photo")}
-                    type="photo"
+                    type="file"
                     name="photo"
                     id="photo"
                     placeholder="PhotoURL"
@@ -137,7 +150,7 @@ const Signup = () => {
                   />
                   {errors.photo && (
                     <p className="text-red-600" role="alert">
-                      {errors.photo?.message}
+                      {errors.photo.message}
                     </p>
                   )}
                 </div>
@@ -157,7 +170,7 @@ const Signup = () => {
                   />
                   {errors.email && (
                     <p className="text-red-600 text-sm w-80 mt-1" role="alert">
-                      {errors.email?.message}
+                      {errors.email.message}
                     </p>
                   )}
                 </div>
@@ -190,7 +203,7 @@ const Signup = () => {
                   />
                   {errors.password && (
                     <p className="text-red-600 text-sm w-80 mt-1" role="alert">
-                      {errors.password?.message}
+                      {errors.password.message}
                     </p>
                   )}
                 </div>
@@ -216,8 +229,9 @@ const Signup = () => {
           </div>
           <div>
             <button
-            onClick={handleGoogleSignIn}
-            className="btn btn-outline btn-accent w-full">
+              onClick={handleGoogleSignIn}
+              className="btn btn-outline btn-accent w-full"
+            >
               Continue with Google
             </button>
           </div>
